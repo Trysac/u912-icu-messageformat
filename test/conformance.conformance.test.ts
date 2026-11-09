@@ -7,7 +7,6 @@ import { format, parse } from "../src/index.js";
 describe("CI Conformance Differential Tests", () => {
   it("generates 2,000 messages with fast-check seed 11 and matches formatjs parser and intl-messageformat", () => {
     // Generator producing strictly valid grammar from the supported subset
-    const idArb = fc.stringMatching(/^[a-zA-Z][a-zA-Z0-9_]{0,4}$/);
     const literalArb = fc.stringMatching(/^[a-zA-Z0-9 !?,.:;_-]{1,10}$/);
     const numberStyleArb = fc.constantFrom(undefined, "integer", "percent");
 
@@ -16,39 +15,48 @@ describe("CI Conformance Differential Tests", () => {
       values: Record<string, unknown>;
     }
 
+    let idCounter = 0;
+    const makeId = () => `var_${++idCounter}`;
+
     const messageGen = fc.letrec((tie) => ({
       leaf: fc.oneof(
         literalArb.map((text): GeneratedMessage => ({ pattern: text, values: {} })),
-        idArb.map((id): GeneratedMessage => ({ pattern: `{${id}}`, values: { [id]: "val" } })),
-        fc.tuple(idArb, numberStyleArb).map(
-          ([id, style]): GeneratedMessage => ({
+        fc.constant(null).map((): GeneratedMessage => {
+          const id = makeId();
+          return { pattern: `{${id}}`, values: { [id]: "val" } };
+        }),
+        numberStyleArb.map((style): GeneratedMessage => {
+          const id = makeId();
+          return {
             pattern: style ? `{${id}, number, ${style}}` : `{${id}, number}`,
             values: { [id]: 12.34 },
-          }),
-        ),
+          };
+        }),
       ),
       node: fc.oneof(
         tie("leaf"),
-        fc.tuple(idArb, tie("leaf"), tie("leaf")).map(
-          ([id, opt1, opt2]): GeneratedMessage => ({
+        fc.tuple(tie("leaf"), tie("leaf")).map(([opt1, opt2]): GeneratedMessage => {
+          const id = makeId();
+          return {
             pattern: `{${id}, select, a {${(opt1 as GeneratedMessage).pattern}} other {${(opt2 as GeneratedMessage).pattern}}}`,
             values: {
               [id]: "a",
               ...(opt1 as GeneratedMessage).values,
               ...(opt2 as GeneratedMessage).values,
             },
-          }),
-        ),
-        fc.tuple(idArb, tie("leaf"), tie("leaf")).map(
-          ([id, opt1, opt2]): GeneratedMessage => ({
+          };
+        }),
+        fc.tuple(tie("leaf"), tie("leaf")).map(([opt1, opt2]): GeneratedMessage => {
+          const id = makeId();
+          return {
             pattern: `{${id}, plural, one {# ${(opt1 as GeneratedMessage).pattern}} other {# ${(opt2 as GeneratedMessage).pattern}}}`,
             values: {
               [id]: 1,
               ...(opt1 as GeneratedMessage).values,
               ...(opt2 as GeneratedMessage).values,
             },
-          }),
-        ),
+          };
+        }),
       ),
     }));
 
