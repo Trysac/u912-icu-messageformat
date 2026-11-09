@@ -1,0 +1,212 @@
+[
+  {
+    "message": "Simple text",
+    "locale": "en",
+    "values": {}
+  },
+  {
+    "message": "Hello, {name}!",
+    "locale": "en",
+    "values": { "name": "World" }
+  },
+  {
+    "message": "Score: {score, number}",
+    "locale": "en-US",
+    "values": { "score": 1234.5 }
+  },
+  {
+    "message": "Score: {score, number}",
+    "locale": "de-DE",
+    "values": { "score": 1234.5 }
+  },
+  {
+    "message": "Count: {c, number, integer}",
+    "locale": "en-US",
+    "values": { "c": 2.5 }
+  },
+  {
+    "message": "Ratio: {r, number, percent}",
+    "locale": "en-US",
+    "values": { "r": 0.25 }
+  },
+  {
+    "message": "{count, plural, =0 {no items} one {# item} other {# items}}",
+    "locale": "en",
+    "values": { "count": 0 }
+  },
+  {
+    "message": "{count, plural, =0 {no items} one {# item} other {# items}}",
+    "locale": "en",
+    "values": { "count": 1 }
+  },
+  {
+    "message": "{count, plural, =0 {no items} one {# item} other {# items}}",
+    "locale": "en",
+    "values": { "count": 1000 }
+  },
+  {
+    "message": "{n, plural, one {# plik} few {# pliki} many {# plików} other {# pliku}}",
+    "locale": "pl",
+    "values": { "n": 1 }
+  },
+  {
+    "message": "{n, plural, one {# plik} few {# pliki} many {# plików} other {# pliku}}",
+    "locale": "pl",
+    "values": { "n": 2 }
+  },
+  {
+    "message": "{n, plural, one {# plik} few {# pliki} many {# plików} other {# pliku}}",
+    "locale": "pl",
+    "values": { "n": 5 }
+  },
+  {
+    "message": "{n, plural, one {# plik} few {# pliki} many {# plików} other {# pliku}}",
+    "locale": "pl",
+    "values": { "n": 22 }
+  },
+  {
+    "message": "{n, plural, one {# plik} few {# pliki} many {# plików} other {# pliku}}",
+    "locale": "pl",
+    "values": { "n": 1.5 }
+  },
+  {
+    "message": "{n, plural, offset:1 =0 {nobody} =1 {only {name}} one {{name} and # other} other {{name} and # others}}",
+    "locale": "en",
+    "values": { "n": 0, "name": "Ann" }
+  },
+  {
+    "message": "{n, plural, offset:1 =0 {nobody} =1 {only {name}} one {{name} and # other} other {{name} and # others}}",
+    "locale": "en",
+    "values": { "n": 1, "name": "Ann" }
+  },
+  {
+    "message": "{n, plural, offset:1 =0 {nobody} =1 {only {name}} one {{name} and # other} other {{name} and # others}}",
+    "locale": "en",
+    "values": { "n": 2, "name": "Ann" }
+  },
+  {
+    "message": "{n, plural, offset:1 =0 {nobody} =1 {only {name}} one {{name} and # other} other {{name} and # others}}",
+    "locale": "en",
+    "values": { "n": 3, "name": "Ann" }
+  },
+  {
+    "message": "{n, selectordinal, one {#st} two {#nd} few {#rd} other {#th}}",
+    "locale": "en",
+    "values": { "n": 1 }
+  },
+  {
+    "message": "{n, selectordinal, one {#st} two {#nd} few {#rd} other {#th}}",
+    "locale": "en",
+    "values": { "n": 2 }
+  },
+  {
+    "message": "{n, selectordinal, one {#st} two {#nd} few {#rd} other {#th}}",
+    "locale": "en",
+    "values": { "n": 3 }
+  },
+  {
+    "message": "{n, selectordinal, one {#st} two {#nd} few {#rd} other {#th}}",
+    "locale": "en",
+    "values": { "n": 4 }
+  },
+  {
+    "message": "{n, selectordinal, one {#st} two {#nd} few {#rd} other {#th}}",
+    "locale": "en",
+    "values": { "n": 11 }
+  },
+  {
+    "message": "{n, selectordinal, one {#st} two {#nd} few {#rd} other {#th}}",
+    "locale": "en",
+    "values": { "n": 22 }
+  },
+  {
+    "message": "{n, selectordinal, one {#st} two {#nd} few {#rd} other {#th}}",
+    "locale": "en",
+    "values": { "n": 103 }
+  },
+  {
+    "message": "I''m {name}",
+    "locale": "en",
+    "values": { "name": "Ann" }
+  },
+  {
+    "message": "'{name}' is literal",
+    "locale": "en",
+    "values": { "name": "ignored" }
+  },
+  {
+    "message": "it's {name}",
+    "locale": "en",
+    "values": { "name": "Ann" }
+  },
+  {
+    "message": "{n, plural, other {'#' is #}}",
+    "locale": "en",
+    "values": { "n": 5 }
+  },
+  {
+    "message": "{g, select, female {She} male {He} other {They}} said {n, plural, one {# word} other {# words}}",
+    "locale": "en",
+    "values": { "g": "x", "n": 2 }
+  },
+  {
+    "message": "{g, select, female {She} male {He} other {They}} said {n, plural, one {# word} other {# words}}",
+    "locale": "en",
+    "values": { "g": "female", "n": 1 }
+  },
+  {
+    "message": "{g, select, female {She} male {He} other {They}} said {n, plural, one {# word} other {# words}}",
+    "locale": "en",
+    "values": { "g": "male", "n": 10 }
+  },
+  {
+    "message": "{ n , plural , other {x} }",
+    "locale": "en",
+    "values": { "n": 42 }
+  },
+  {
+    "message": "{n, plural, other {}}",
+    "locale": "en",
+    "values": { "n": 0 }
+  },
+  {
+    "message": "{n, plural, =1 {exact one} one {category one} other {other}}",
+    "locale": "en",
+    "values": { "n": 1 }
+  },
+  {
+    "message": "{n, plural, =1 {exact one} one {category one} other {other}}",
+    "locale": "en",
+    "values": { "n": 21 }
+  },
+  {
+    "message": "{n, plural, other {#}}",
+    "locale": "en",
+    "values": { "n": -5 }
+  },
+  {
+    "message": "{gender, select, other {{count, plural, =0 {none} other {# items}}}}",
+    "locale": "en",
+    "values": { "gender": "other", "count": 0 }
+  },
+  {
+    "message": "{gender, select, other {{count, plural, =0 {none} other {# items}}}}",
+    "locale": "en",
+    "values": { "gender": "other", "count": 3 }
+  },
+  {
+    "message": "A # B # C",
+    "locale": "en",
+    "values": {}
+  },
+  {
+    "message": "A '' B '' C",
+    "locale": "en",
+    "values": {}
+  },
+  {
+    "message": "'{'not arg'}'",
+    "locale": "en",
+    "values": {}
+  }
+]

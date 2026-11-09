@@ -9,4 +9,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- feat: add zero-runtime-dependency ICU MessageFormat parser and compiler with typed errors and formatjs conformance
 - Initial project structure from the factory utility template.

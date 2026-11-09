@@ -1,55 +1,30 @@
-# icu-messageformat
+# @trysac/icu-messageformat
 
-[![npm version](https://img.shields.io/npm/v/@trysac/icu-messageformat.svg)](https://www.npmjs.com/package/@trysac/icu-messageformat)
-[![license: MIT](https://img.shields.io/npm/l/@trysac/icu-messageformat.svg)](LICENSE)
-[![CI](https://github.com/Trysac/u912-icu-messageformat/actions/workflows/ci.yml/badge.svg)](https://github.com/Trysac/u912-icu-messageformat/actions/workflows/ci.yml)
+Hand-written ICU MessageFormat parser and compiler/formatter in TypeScript. Supports ICU ApostropheMode `DOUBLE_OPTIONAL`, plural (with offset and exact matches), `selectordinal`, `select`, and `Intl` number formatting. It is designed to be lightweight, typed, and dependency-free, relying on Node.js native `Intl` capabilities.
 
-Hand-written ICU MessageFormat parser and formatter with ICU apostrophe quoting, plural with offset and exact matches, selectordinal, select and Intl numbers
+## The Problem
 
-## Problem
-
-Describe in two or three sentences the concrete problem this utility solves, who hits it, and why existing
-packages do not solve it well. Keep it factual; link to an issue or decision record when there is one.
-
-## Install
-
-```sh
-npm install @trysac/icu-messageformat
-```
-
-Requires Node.js 20 or newer. The package ships ES modules with TypeScript declarations.
+Translating UI strings requires handling plurals, gender selects, and locale-specific number formatting. ICU MessageFormat is the standard, but existing implementations are often large and lack strict resource bounds. This utility provides a compact, typed alternative that catches errors early with precise offsets and enforces input size limits.
 
 ## Usage
 
-```ts
-import { greet } from "@trysac/icu-messageformat";
+```typescript
+import { format } from '@trysac/icu-messageformat';
 
-// Build a greeting; surrounding whitespace is ignored.
-const message = greet("  Ada ");
-console.log(message); // "Hello, Ada!"
-
-try {
-  greet("   ");
-} catch (error) {
-  console.error((error as Error).message); // "name must not be empty"
-}
+const message = '{n, plural, =0 {none} one {# item} other {# items}}';
+const result = format(message, 'en', { n: 1000 });
+console.log(result); // "1,000 items"
 ```
 
-## API
+## API Summary
 
-| Export | Signature | Description |
-|---|---|---|
-| `greet` | `(name: string) => string` | Placeholder API; replace it with the real one. |
+- `parse(message: string, opts?: { maxLength?: number; maxDepth?: number }): MessageAst`: Parses an ICU string into a typed AST. Limits default to `maxLength: 10_000` and `maxDepth: 10`.
+- `compile(message: string | MessageAst, locale: string | string[]): (values?: Record<string, unknown>) => string`: Compiles patterns into an efficient formatter. Caches `Intl` objects per compile call.
+- `format(message: string, locale: string | string[], values?: Record<string, unknown>): string`: Convenience function for one-step parsing, compilation, and evaluation.
+- `MessageFormatError`: Thrown for syntax or formatting errors. Includes `code` (e.g., `syntax`, `unclosed_brace`, `missing_other`, `missing_value`, `invalid_value`, `input_too_large`, `too_deep`) and `offset` (UTF-16 index).
 
-## Development
+## Why not intl-messageformat?
 
-```sh
-npm install
-npm run check   # lint, format, types, tests with coverage, docs, secrets
-```
+This library is significantly smaller, providing a dependency-free parser that offers granular typed errors with byte-precise offsets and strict input bounds, whereas larger alternatives often bundle broad, unconstrained features.
 
-See [AGENTS.md](AGENTS.md) for the full command list and [CONTRIBUTING.md](CONTRIBUTING.md) for the workflow.
-
-## License
-
-[MIT](LICENSE) © 2026 Miguel Gomez
+See [docs/SECURITY.md](docs/SECURITY.md) for safety details.

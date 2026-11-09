@@ -1,20 +1,23 @@
 /**
- * Public entry point of @trysac/icu-messageformat.
- *
- * Replace this placeholder with the utility's real API. Keep every export documented and covered by tests.
+ * Hand-written ICU MessageFormat parser and formatter.
+ * Implements ICU ApostropheMode DOUBLE_OPTIONAL, exact plural options, plural offset,
+ * selectordinal, select, and Intl number formatting with zero runtime dependencies.
  */
 
-/**
- * Builds a greeting for `name`.
- *
- * @param name - Who to greet. Surrounding whitespace is ignored.
- * @returns The greeting, for example `"Hello, Ada!"`.
- * @throws {TypeError} When `name` is empty after trimming.
- */
-export function greet(name: string): string {
-  const trimmed = name.trim();
-  if (trimmed === "") {
-    throw new TypeError("name must not be empty");
-  }
-  return `Hello, ${trimmed}!`;
-}
+export { compile, format } from "./compiler.js";
+export { MessageFormatError, type MessageFormatErrorCode } from "./errors.js";
+export { parse } from "./parser.js";
+export type {
+  ArgumentNode,
+  AstNode,
+  LiteralNode,
+  MessageAst,
+  NumberNode,
+  ParseOptions,
+  PluralNode,
+  PluralOption,
+  PoundNode,
+  SelectNode,
+  SelectOption,
+  SelectOrdinalNode,
+} from "./types.js";
