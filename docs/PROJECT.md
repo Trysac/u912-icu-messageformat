@@ -2,19 +2,22 @@
 
 ## Objective
 
-Hand-written ICU MessageFormat parser and formatter with ICU apostrophe quoting, plural with offset and exact matches, selectordinal, select and Intl numbers
-
-State the measurable outcome this utility must deliver and who it is for.
+Provide a robust, hand-written ICU MessageFormat parser and formatter that implements ICU apostrophe quoting, plural with offset and exact matches, selectordinal, select, and native Intl number support.
 
 ## Scope
 
-In scope:
+- Parsing and AST construction for the supported ICU subset.
+- Compilation of AST nodes to runtime formatter functions.
+- Integration with Node.js/Browser `Intl` APIs for localization.
+- Enforced resource limits on input length and recursion depth.
 
-- The public API documented in the README.
+## Out of Scope
 
-Out of scope:
-
-- List what this utility deliberately does not do.
+- Date, time, duration, and spellout arguments.
+- Number skeletons (::).
+- Choice format.
+- Rich text tags.
+- Message extraction tooling.
 
 ## Timeline
 
@@ -24,10 +27,19 @@ Out of scope:
 
 ## Effort metrics
 
-Measured values only. Leave "pending measurement" until a real figure is recorded; never estimate here.
-
 | Metric | Value | Source |
 |---|---|---|
-| Tokens (input / output) | pending measurement | factory ledger |
+| Tokens (input / output) | 388578 / 22046 | factory ledger |
 | Hours (human) | pending measurement | time log |
-| Cost (USD) | pending measurement | factory ledger |
+| Cost (USD) | 0.1119 | factory ledger |
+
+## Factory run u912 (measured from API usage)
+
+| Phase | Model | Batch | Input | Output | Cache write | Cache read | Cost (USD) |
+|---|---|---|---|---|---|---|---|
+| generation | google/gemini-3.8-flash | yes | 5927 | 14188 | 0 | 0 | 0.0576 |
+| fix-1 | google/gemini-3.1-flash-lite | no | 75117 | 6174 | 0 | 136014 | 0.0314 |
+| audit | google/gemini-3.1-flash-lite | no | 53719 | 255 | 0 | 100222 | 0.0163 |
+| docs | google/gemini-3.1-flash-lite | no | 17579 | 1429 | 0 | 0 | 0.0065 |
+
+Total: $0.1119. Prices: vertex line, as measured by its adapter.

@@ -1,30 +1,17 @@
 # Architecture
 
-## Overview
+`@trysac/icu-messageformat` provides a self-contained, hand-written recursive-descent parser and compiler for ICU MessageFormat patterns without external dependencies.
 
-`@trysac/icu-messageformat` is a small, dependency-free TypeScript library published to npm as ES modules with type
-declarations. Hand-written ICU MessageFormat parser and formatter with ICU apostrophe quoting, plural with offset and exact matches, selectordinal, select and Intl numbers
+## Parsing Pipeline
 
-## Modules
+1. **Length check**: The input string length is capped at `maxLength` (default 10,000 characters).
+2. **Lexing & Ast Construction**: Characters are scanned sequentially respecting ICU `ApostropheMode.DOUBLE_OPTIONAL`.
+   - `''` is converted to a single literal apostrophe everywhere.
+   - `'` followed by `{`, `}`, or `#` (inside plural/selectordinal) enters quoted literal mode up to the next `'`.
+   - Unpaired or non-syntax apostrophes are treated as literal apostrophes.
+3. **Depth bounding**: Recursion into nested select and plural options is tracked against `maxDepth` (default 10) to prevent stack overflow.
 
-| Module | Responsibility |
-|---|---|
-| `src/index.ts` | Public API. Everything consumers import is exported from here. |
+## Compilation and Formatting
 
-Add a row when you add a module. Internal modules are not re-exported unless they are part of the public API.
-
-## Boundaries
-
-- No runtime dependencies by default; any addition is justified in [STACK.md](STACK.md).
-- No I/O at import time. Functions are pure unless their documentation says otherwise.
-- Errors are thrown as built-in error types (`TypeError`, `RangeError`) with actionable messages.
-
-## Build and distribution
-
-`npm run build` compiles `src/` to `dist/` with `tsconfig.build.json`. Only `dist/` is published
-(`files` in `package.json`).
-
-## Decisions
-
-Architectural decisions are recorded in [decisions/](decisions/), starting with
-[0001](decisions/0001-record-architecture-decisions.md).
+- `compile` initializes required `Intl.NumberFormat` and `Intl.PluralRules` instances scoped to the compiled function closure. No global cache is shared across callers or locales.
+- Plural selector resolution evaluates exact matches (`=N`) against the raw value first, followed by plural category rules calculated on `value - offset`.
